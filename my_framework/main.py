@@ -22,7 +22,7 @@ class Framework:
             view = PageNotFound()
 
         # Запускаем контроллер
-        code, body = view()
+        code, body = view(request)
         start_response(
             code,
             [('Content-Type', 'text/html')]
