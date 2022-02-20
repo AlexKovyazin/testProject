@@ -1,7 +1,7 @@
 import os
 from sqlalchemy import create_engine, MetaData, Table
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import create_session
+from sqlalchemy.orm import Session
 
 
 db_path = os.path.join(os.getcwd(), 'testDB.sqlite3')
@@ -23,15 +23,8 @@ class User(Base):
 
 
 def get_total():
-    pass
-
-
-def show_query_result(query):
-    for region in query:
-        print(region)
-
-
-# session = create_session(bind=engine)
-#
-# q = session.query(Region).all()
-# show_query_result(q)
+    with Session(engine) as session:
+        query = session.query(User, City, Region)\
+            .join(City, User.city == City.id)\
+            .join(Region, User.region == Region.id)
+        return query.all()
