@@ -1,10 +1,13 @@
 import quopri
+import os
 from my_framework.requests import GetRequests, PostRequests
+from utils.content_types import CONTENT_TYPES
+from settings import STATIC_URL, STATIC_FILES_DIR
 
 
 class PageNotFound:
-    def __call__(self):
-        return '404 Page not found :('
+    def __call__(self, request):
+        return '404 Page not found', '404 Page not found :('
 
 
 class Framework:
@@ -32,18 +35,27 @@ class Framework:
             request['request_params'] = request_params
 
         # Получаем нужный контроллер
-        if path in self.routes_lst:
-            view = self.routes_lst[path]
+        if path.startswith(STATIC_URL):
+            # Получаем путь к файлу из директории статики
+            file_path = path[len(STATIC_URL):len(path) - 1]
+            # Получаем content type из файла
+            content_type = self.get_content_type(file_path)
+            code, body = self.get_static(STATIC_FILES_DIR, file_path)
         else:
-            view = PageNotFound()
+            if path in self.routes_lst:
+                view = self.routes_lst[path]
+            else:
+                view = PageNotFound()
 
-        # Запускаем контроллер
-        code, body = view(request)
+            code, body = view(request)
+            body = body.encode('UTF-8')
+            content_type = self.get_content_type(path)
+
         start_response(
             code,
-            [('Content-Type', 'text/html')]
+            [('Content-Type', content_type)]
         )
-        return [body.encode('utf-8')]
+        return [body]
 
     @staticmethod
     def decode_value(data):
@@ -58,3 +70,18 @@ class Framework:
             decode_value = quopri.decodestring(replace_value).decode('UTF-8')
             decode_data[key] = decode_value
         return decode_data
+
+    @staticmethod
+    def get_content_type(file_path, content_types=CONTENT_TYPES):
+        file_name = os.path.basename(file_path)
+        extension = os.path.splitext(file_name)[1]
+        return content_types.get(extension, 'text/html')
+
+    @staticmethod
+    def get_static(static_dir, file_path):
+        path_to_file = os.path.join(static_dir, file_path)
+        with open(path_to_file, 'rb') as file:
+            file_content = file.read()
+        code = '200 OK'
+        return code, file_content
+
