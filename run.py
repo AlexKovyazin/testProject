@@ -3,14 +3,15 @@ import sqlite3
 from wsgiref.simple_server import make_server
 from my_framework.main import Framework
 from urls import routes
+from settings import DB_PATH, ROOT_DIR
 
-db_path = os.path.join(os.getcwd(), 'testDB.sqlite3')
+
 # Проверяем наличие БД в проекте
-if not os.path.exists(db_path):
+if not os.path.exists(DB_PATH):
     # Создаем БД скриптом
     connection = sqlite3.connect('testDB.sqlite3')
     cursor = connection.cursor()
-    with open(os.path.join(os.getcwd(), 'utils', 'create_DB_script.sql'), encoding='utf-8') as file:
+    with open(os.path.join(ROOT_DIR, 'utils', 'create_DB_script.sql'), encoding='utf-8') as file:
         sql_script = file.read()
         cursor.executescript(sql_script)
 
