@@ -16,10 +16,10 @@ CREATE TABLE IF NOT EXISTS users(
 				   second_name VARCHAR(30) NOT NULL,
 				   first_name VARCHAR(30) NOT NULL,
 				   patronymic VARCHAR(30),
-				   region INTEGER UNSIGNED NOT NULL,
-				   city INTEGER UNSIGNED NOT NULL,
-				   phone VARCHAR(16) NOT NULL UNIQUE,
-				   email VARCHAR(60) NOT NULL UNIQUE,
+				   region INTEGER UNSIGNED,
+				   city INTEGER UNSIGNED,
+				   phone VARCHAR(16) UNIQUE,
+				   email VARCHAR(60) UNIQUE,
 
 				   FOREIGN KEY(region) REFERENCES regions(id),
 				   FOREIGN KEY(city) REFERENCES cities(id)
