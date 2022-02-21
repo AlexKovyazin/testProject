@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Тестовое задание</title>
+    <link rel="icon" href="data:;base64,=">
+    <link rel="stylesheet" href="{{ static }}css/style.css">
+</head>
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Регион</th>
+                <th>Город</th>
+                <th>Телефон</th>
+                <th>email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for el in objects_list %}
+            <tr>
+                <td>{{ el.User.id }}</td>
+                <td>{{ el.User.second_name }}</td>
+                <td>{{ el.User.first_name }}</td>
+                <td>{{ el.User.patronymic }}</td>
+                <td>{{ el.Region.region_name }}</td>
+                <td>{{ el.City.city_name }}</td>
+                <td>{{ el.User.phone }}</td>
+                <td>{{ el.User.email }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <button class="open-popup">Добавить пользователя</button>
+
+    <!--Popup-->
+
+    <div class="popup__bg">
+        <form class="popup">
+            <img src="{{ static }}img/bx-x-circle.svg" class="close-popup">
+            <label>
+                <input type="text" name="lastname" required>
+                <div class="label__text">
+                    Фамилия
+                    <p class="note">обязательно</p>
+                </div>
+            </label>
+            <label>
+                <input type="text" name="firstname" required>
+                <div class="label__text">
+                    Имя
+                    <p class="note">обязательно</p>
+                </div>
+            </label>
+            <label>
+                <input type="text" name="patronymic">
+                <div class="label__text">
+                    Отчество
+                </div>
+            </label>
+            <label>
+                <input type="text" name="region">
+                <div class="label__text">
+                    Регион
+                </div>
+            </label>
+            <label>
+                <input type="text" name="city">
+                <div class="label__text">
+                    Город
+                </div>
+            </label>
+            <label>
+                <input type="tel" name="phone" pattern="\+7 [0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}">
+                <div class="label__text">
+                    Телефон
+                    <p class="note">+7 ххх ххх хх хх</p>
+                </div>
+            </label>
+            <label>
+                <input type="email" name="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                <div class="label__text">
+                    email
+                </div>
+            </label>
+            <button type="submit">Создать</button>
+        </form>
+    </div>
+
+</body>
+<script defer src="{{ static }}js/style.js"></script>
+</html>
