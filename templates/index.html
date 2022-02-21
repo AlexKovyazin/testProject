@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for el in objects_list %}
+            {% for el in users_list %}
             <tr>
                 <td>{{ el.User.id }}</td>
                 <td>{{ el.User.second_name }}</td>
@@ -35,11 +35,9 @@
         </tbody>
     </table>
 
-
     <button class="open-popup">Добавить пользователя</button>
 
     <!--Popup-->
-
     <div class="popup__bg">
         <form class="popup">
             <img src="{{ static }}img/bx-x-circle.svg" class="close-popup">
@@ -63,18 +61,28 @@
                     Отчество
                 </div>
             </label>
-            <label>
-                <input type="text" name="region">
+
+            <label class="label-select">
                 <div class="label__text">
                     Регион
                 </div>
+                <select class="label__text region-select">
+                    <option selected disabled>Выберите регион</option>
+                    {% for region in regions_list %}
+                    <option>{{ region.region_name }}</option>
+                    {% endfor %}
+                </select>
             </label>
-            <label>
-                <input type="text" name="city">
+
+            <label class="label-select city-select">
                 <div class="label__text">
                     Город
                 </div>
+                <select class="label__text">
+                    <option selected disabled>Выберите город</option>
+                </select>
             </label>
+
             <label>
                 <input type="tel" name="phone" pattern="\+7 [0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}">
                 <div class="label__text">
@@ -91,7 +99,7 @@
             <button type="submit">Создать</button>
         </form>
     </div>
-
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script defer src="{{ static }}js/style.js"></script>
 </html>
