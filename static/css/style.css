@@ -145,15 +145,6 @@ body {
     flex-direction: column !important;
 }
 
-/* Использовать при реализации ajax /*
-/*.city-select{*/
-/*	display: none !important;*/
-/*}*/
-
-.city-select{
-	display: none;
-}
-
 .option{
     color: black;
 }

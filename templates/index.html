@@ -39,7 +39,7 @@
 
     <!--Popup-->
     <div class="popup__bg">
-        <form class="popup">
+        <form class="popup" method="post">
             <img src="{{ static }}img/bx-x-circle.svg" class="close-popup">
             <label>
                 <input type="text" name="lastname" required>
@@ -66,10 +66,10 @@
                 <div class="label__text">
                     Регион
                 </div>
-                <select class="label__text region-select">
+                <select class="label__text region-select" name="region_id">
                     <option selected disabled>Выберите регион</option>
                     {% for region in regions_list %}
-                    <option>{{ region.region_name }}</option>
+                    <option value="{{ region.id }}">{{ region.region_name }}</option>
                     {% endfor %}
                 </select>
             </label>
@@ -78,7 +78,7 @@
                 <div class="label__text">
                     Город
                 </div>
-                <select class="label__text">
+                <select class="label__text" name="city_id" id="city-select">
                     <option selected disabled>Выберите город</option>
                 </select>
             </label>
@@ -102,4 +102,5 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script defer src="{{ static }}js/style.js"></script>
+<script defer src="{{ static }}js/ajax.js"></script>
 </html>
