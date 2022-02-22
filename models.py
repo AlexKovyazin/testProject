@@ -39,3 +39,30 @@ def get_regions():
     with Session(engine) as session:
         query = session.query(Region).order_by('region_name')
         return query.all()
+
+
+def get_region_cities(region_id):
+    with Session(engine) as session:
+        query = session.query(City).filter(City.region_id == region_id)
+        return query.all()
+
+
+def as_dict(obj):
+    """
+    Возвращает объект sqlalchemy в виде словаря
+    :param obj: объект БД <__main__.(название класса) object at ...
+    :return: dict
+    """
+    return {column.name: getattr(obj, column.name) for column in obj.__table__.columns}
+
+
+def query_as_dict(query):
+    """
+    Аналогично as_dict() но применимо к query
+    :param query: список объектов БД
+    :return: dict
+    """
+    result = []
+    for obj in query:
+        result.append(as_dict(obj))
+    return result
