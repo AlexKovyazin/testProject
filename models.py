@@ -2,9 +2,10 @@ import os
 from sqlalchemy import create_engine, MetaData, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
+from settings import ROOT_DIR
 
 
-db_path = os.path.join(os.getcwd(), 'testDB.sqlite3')
+db_path = os.path.join(ROOT_DIR, 'testDB.sqlite3')
 engine = create_engine(f'sqlite:///{db_path}')
 metadata = MetaData(bind=engine)
 Base = declarative_base()
@@ -18,9 +19,37 @@ class Region(Base):
             query = session.query(City).filter(self.id == City.region_id)
             return query.all()
 
+    @staticmethod
+    def get_region_id_by_name(region_name):
+        with Session(engine) as session:
+            query = session.query(Region).filter(Region.region_name == region_name.capitalize())
+            region_id = query.first().id
+        return region_id
+
+    @staticmethod
+    def get_region_name_by_id(region_id):
+        with Session(engine) as session:
+            query = session.query(Region).filter(Region.id == region_id)
+            region_name = query.first().region_name
+        return region_name
+
 
 class City(Base):
     __table__ = Table('cities', metadata, autoload=True)
+
+    @staticmethod
+    def get_city_id_by_name(city_name):
+        with Session(engine) as session:
+            query = session.query(City).filter(City.city_name == city_name.capitalize())
+            city_id = query.first().id
+        return city_id
+
+    @staticmethod
+    def get_city_name_by_id(city_id):
+        with Session(engine) as session:
+            query = session.query(City).filter(City.id == city_id)
+            city_name = query.first().city_name
+        return city_name
 
 
 class User(Base):
@@ -30,6 +59,12 @@ class User(Base):
         with Session(engine) as session:
             session.add(self)
             session.commit()
+
+    @staticmethod
+    def get_users():
+        with Session(engine) as session:
+            query = session.query(User)
+        return query.all()
 
 
 def get_total():
@@ -61,6 +96,12 @@ def get_regions():
 def get_region_cities(region_id):
     with Session(engine) as session:
         query = session.query(City).filter(City.region_id == region_id)
+        return query.all()
+
+
+def get_cities():
+    with Session(engine) as session:
+        query = session.query(City)
         return query.all()
 
 
