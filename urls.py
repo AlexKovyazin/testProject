@@ -1,6 +1,7 @@
-from views import Index, RegionCities
+from views import Index, RegionCities, DownloadUsersXlsx
 
 routes = {
     '/': Index(),
-    '/get_regions/': RegionCities()
+    '/get_regions/': RegionCities(),
+    '/download_users_xlsx/': DownloadUsersXlsx(),
 }
