@@ -1,14 +1,28 @@
+from my_framework.main import Framework
 from my_framework.templator import render
-from models import get_total, get_regions, get_region_cities
+from models import get_total, get_regions, get_region_cities, replace_none, User
 
 
 class Index:
 
     def __call__(self, request):
+        if request['method'] == 'POST':
+            raw_user_data = Framework.decode_value(request['data'])
+            user_data = {}
+
+            for key, value in raw_user_data.items():
+                if value == '':
+                    user_data[key] = None
+                else:
+                    user_data[key] = value
+
+            new_user = User(**user_data)
+            new_user.create_user()
+
         regions_list = get_regions()
 
         return '200 OK', render('index.html',
-                                users_list=get_total(),
+                                users_list=replace_none(get_total()),
                                 regions_list=regions_list)
 
 

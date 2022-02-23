@@ -39,17 +39,17 @@
 
     <!--Popup-->
     <div class="popup__bg">
-        <form class="popup" method="post">
+        <form class="popup" method="post" name="create-user-form" id="user-create-form">
             <img src="{{ static }}img/bx-x-circle.svg" class="close-popup">
             <label>
-                <input type="text" name="lastname" required>
+                <input type="text" name="second_name" required>
                 <div class="label__text">
                     Фамилия
                     <p class="note">обязательно</p>
                 </div>
             </label>
             <label>
-                <input type="text" name="firstname" required>
+                <input type="text" name="first_name" required>
                 <div class="label__text">
                     Имя
                     <p class="note">обязательно</p>
@@ -66,7 +66,7 @@
                 <div class="label__text">
                     Регион
                 </div>
-                <select class="label__text region-select" name="region_id">
+                <select class="label__text region-select" name="region">
                     <option selected disabled>Выберите регион</option>
                     {% for region in regions_list %}
                     <option value="{{ region.id }}">{{ region.region_name }}</option>
@@ -78,7 +78,7 @@
                 <div class="label__text">
                     Город
                 </div>
-                <select class="label__text" name="city_id" id="city-select">
+                <select class="label__text" name="city" id="city-select">
                     <option selected disabled>Выберите город</option>
                 </select>
             </label>
@@ -96,11 +96,11 @@
                     email
                 </div>
             </label>
-            <button type="submit">Создать</button>
+            <button type="submit" id="submit-form">Создать</button>
         </form>
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script defer src="{{ static }}js/style.js"></script>
-<script defer src="{{ static }}js/ajax.js"></script>
+<script defer src="{{ static }}js/scripts.js"></script>
 </html>
