@@ -7,13 +7,10 @@ import os
 def collect_users_data():
     """
     Собирает данные о пользователях из БД.
-    :return: [{headers}, {user1}, {user2}...]
+    :return: [{user1}, {user2}...]
     """
     result = []
     users_data = query_as_dict(User.get_users())
-    headers = [key for key in users_data[0].keys()]
-    # Записываем названия столбцов первым элементом
-    result.append(headers)
 
     for user in users_data:
         user_data = []
@@ -33,12 +30,15 @@ def generate_xlsx(data):
     """
     Генерирует .xlsx файл на основании переданных в data данных.
     :param data: Список, где каждый элемент - вложенный список.
-                 Каждый список записывается в новой строке.
-                 Каждый элемент списка записывается в отдельный столбец.
+    Каждый список записывается в новой строке.
+    Каждый элемент списка записывается в отдельный столбец.
     :return: None
     """
     workbook = Workbook()
     worksheet = workbook.active
+
+    headers = User.get_headers()
+    worksheet.append(headers)
 
     for el in data:
         worksheet.append(el)
