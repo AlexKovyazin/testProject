@@ -33,6 +33,11 @@ class Region(Base):
             region_name = query.first().region_name
         return region_name
 
+    def create_region(self):
+        with Session(engine) as session:
+            session.add(self)
+            session.commit()
+
 
 class City(Base):
     __table__ = Table('cities', metadata, autoload=True)
@@ -43,6 +48,17 @@ class City(Base):
             query = session.query(City).filter(City.city_name == city_name.capitalize())
             city_id = query.first().id
         return city_id
+
+    def create_city(self):
+        with Session(engine) as session:
+            session.add(self)
+            session.commit()
+
+    @staticmethod
+    def get_region_id(city_id):
+        with Session(engine) as session:
+            city_region_id = session.query(City).filter(City.id).first().region_id
+        return city_region_id
 
     @staticmethod
     def get_city_name_by_id(city_id):
