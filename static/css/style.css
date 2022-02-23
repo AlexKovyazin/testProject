@@ -27,6 +27,28 @@ body {
     border: 2px solid #666666b0;
 }
 
+.button-block {
+    margin: 10px;
+}
+
+.func-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #666666b0;
+    color: #fff;
+    font-weight: normal;
+    font-size: inherit;
+    border: 2px solid #666666b0;
+    width: 300px;
+}
+
+.func-button:hover {
+    background: #fff;
+    color:#666666;
+    border: 2px solid #666666b0;
+    transition: 0.5s all;
+}
+
 .open-popup:hover {
     background: #fff;
     color:#666666;
