@@ -82,6 +82,15 @@ class User(Base):
             query = session.query(User)
         return query.all()
 
+    @staticmethod
+    def get_headers():
+        headers = []
+        with Session(engine) as session:
+            query = session.query(User).first()
+        for column in query.__table__.columns:
+            headers.append(column.name)
+        return headers
+
 
 def get_total():
     with Session(engine) as session:
