@@ -1,7 +1,7 @@
 from my_framework.main import Framework
 from my_framework.templator import render
 from models import get_total, get_regions, get_region_cities, replace_none, User
-from utils.xlsx_export import generate_users_xlsx
+from utils.xlsx_export import generate_xlsx, collect_users_data
 
 
 class Index:
@@ -46,7 +46,8 @@ class RegionCities:
 class DownloadUsersXlsx:
 
     def __call__(self, request):
-        generate_users_xlsx()
+        users_data = collect_users_data()
+        generate_xlsx(users_data)
         return '200 OK', render('index.html',
                                 users_list=replace_none(get_total()),
                                 regions_list=get_regions())

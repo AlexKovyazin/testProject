@@ -4,14 +4,16 @@ from settings import ROOT_DIR
 import os
 
 
-def generate_users_xlsx():
-    workbook = Workbook()
-    worksheet = workbook.active
-
+def collect_users_data():
+    """
+    Собирает данные о пользователях из БД.
+    :return: [{headers}, {user1}, {user2}...]
+    """
+    result = []
     users_data = query_as_dict(User.get_users())
     headers = [key for key in users_data[0].keys()]
-
-    worksheet.append(headers)
+    # Записываем названия столбцов первым элементом
+    result.append(headers)
 
     for user in users_data:
         user_data = []
@@ -22,7 +24,24 @@ def generate_users_xlsx():
         user['city'] = City.get_city_name_by_id(city_id)
         for key, value in user.items():
             user_data.append(value)
-        worksheet.append(user_data)
+        result.append(user_data)
+
+    return result
+
+
+def generate_xlsx(data):
+    """
+    Генерирует .xlsx файл на основании переданных в data данных.
+    :param data: Список, где каждый элемент - вложенный список.
+                 Каждый список записывается в новой строке.
+                 Каждый элемент списка записывается в отдельный столбец.
+    :return: None
+    """
+    workbook = Workbook()
+    worksheet = workbook.active
+
+    for el in data:
+        worksheet.append(el)
 
     file_name = 'export_users.xlsx'
     file_path = os.path.join(ROOT_DIR, 'media', file_name)
@@ -31,7 +50,3 @@ def generate_users_xlsx():
 
 def download_users_xlsx():
     pass
-
-
-if __name__ == '__main__':
-    generate_users_xlsx()
