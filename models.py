@@ -26,13 +26,30 @@ class City(Base):
 class User(Base):
     __table__ = Table('users', metadata, autoload=True)
 
+    def create_user(self):
+        with Session(engine) as session:
+            session.add(self)
+            session.commit()
+
 
 def get_total():
     with Session(engine) as session:
         query = session.query(User, City, Region)\
-            .join(City, User.city == City.id)\
-            .join(Region, User.region == Region.id)
+            .join(City, User.city == City.id, isouter=True)\
+            .join(Region, User.region == Region.id, isouter=True)
         return query.all()
+
+
+def replace_none(query):
+    for join in query:
+        for obj in join:
+            if obj is None:
+                continue
+            for column in obj.__table__.columns:
+                value = getattr(obj, column.name)
+                if value is None:
+                    setattr(obj, column.name, '')
+    return query
 
 
 def get_regions():
