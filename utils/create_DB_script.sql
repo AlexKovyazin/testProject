@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS regions(
 						
 CREATE TABLE IF NOT EXISTS cities(
 					id INTEGER PRIMARY KEY AUTOINCREMENT,
-					region_id INTEGER UNSIGNED NOT NULL,
+					region_id INTEGER UNSIGNED,
 					city_name VARCHAR(40) NOT NULL UNIQUE,
 
 					FOREIGN KEY(region_id) REFERENCES regions(id)
