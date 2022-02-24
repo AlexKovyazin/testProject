@@ -1,9 +1,7 @@
-import os
+import re
 from openpyxl import load_workbook
 from models import Region, City, User
-from settings import ROOT_DIR
 from pdfminer import high_level
-import re
 
 
 def replace_all(text: str, replace_dict: dict):

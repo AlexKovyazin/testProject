@@ -1,10 +1,10 @@
+import os
+import comtypes.client
 from openpyxl import Workbook
 from models import query_as_dict, Region, City, User
 from settings import ROOT_DIR
-import os
 from PyPDF2 import PdfFileMerger
 from docxtpl import DocxTemplate
-import comtypes.client
 
 
 def generate_users_resume():
@@ -135,5 +135,6 @@ def download_users_xlsx():
 
 
 if __name__ == '__main__':
-    generate_users_resume()  # Генерирует .xlsx файл по таблице users
-    generate_xlsx(collect_users_data())  # Генерирует .pdf файл с резюме по таблице users
+    pass
+    # generate_users_resume()  # Генерирует .xlsx файл по таблице users
+    # generate_xlsx(collect_users_data())  # Генерирует .pdf файл с резюме по таблице users

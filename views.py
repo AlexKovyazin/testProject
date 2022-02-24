@@ -5,9 +5,13 @@ from utils.export import generate_xlsx, collect_users_data, generate_users_resum
 
 
 class Index:
-
+    """
+    Класс основной страницы.
+    При вызове возвращает шаблон и контекст.
+    """
     def __call__(self, request):
         if request['method'] == 'POST':
+            # Обработка формы создания пользователя
             raw_user_data = Framework.decode_value(request['data'])
             user_data = {}
 
@@ -20,15 +24,15 @@ class Index:
             new_user = User(**user_data)
             new_user.create_user()
 
-        regions_list = get_regions()
-
         return '200 OK', render('index.html',
                                 users_list=replace_none(get_total()),
-                                regions_list=regions_list)
+                                regions_list=get_regions())
 
 
 class RegionCities:
-
+    """
+    Класс обработчик ajax запроса при выборе региона в форме создания пользователя
+    """
     def __call__(self, request):
         # Получаем id региона из запроса
         region_id = request['data']['id']
@@ -44,7 +48,10 @@ class RegionCities:
 
 
 class DownloadUsersXlsx:
-
+    """
+    Класс запускающий процесс генерации .xlsx файла на основании
+    данных таблицы users в БД.
+    """
     def __call__(self, request):
         users_data = collect_users_data()
         generate_xlsx(users_data)
@@ -54,7 +61,10 @@ class DownloadUsersXlsx:
 
 
 class DownloadUsersPdf:
-
+    """
+    Класс запускающий процесс генерации .pdf файла на основании
+    данных таблицы users в БД.
+    """
     def __call__(self, request):
         generate_users_resume()
         return '200 OK', render('index.html',

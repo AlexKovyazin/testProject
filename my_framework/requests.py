@@ -24,7 +24,7 @@ class PostRequests:
     @staticmethod
     def get_wsgi_input_data(environ) -> bytes:
         content_length_data = environ['CONTENT_LENGTH']
-        # Проверяем длину содержимого
+        # Проверяем наличие содержимого
         if content_length_data:
             content_length = int(content_length_data)
         else:

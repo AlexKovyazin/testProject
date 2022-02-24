@@ -8,9 +8,9 @@ from settings import ROOT_DIR
 # При запуске run.py сначала происходит импортирование всех модулей.
 # В urls.py импортируется класс Index,
 # использующий функцию get_total(), которая обращается к БД.
+# При отсутствии БД необходимо обработать событие отсутствия таблиц
 try:
     from urls import routes
-
 except NoSuchTableError:
     # Создаем БД скриптом
     connection = sqlite3.connect('testDB.sqlite3')
