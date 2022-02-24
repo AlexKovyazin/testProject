@@ -29,10 +29,12 @@ class Framework:
         if method == 'POST':
             data = PostRequests().get_request_params(environ)
             request['data'] = data
+            # print(f"аргументы POST - {self.decode_value(data)}")
         if method == 'GET':
             # Получаем параметры запроса и добавляем их в request
             request_params = GetRequests().get_request_params(environ)
             request['request_params'] = request_params
+            # print(f"аргументы GET - {self.decode_value(request_params)}")
 
         # Получаем нужный контроллер
         if path.startswith(STATIC_URL):
