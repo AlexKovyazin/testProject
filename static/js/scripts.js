@@ -22,3 +22,24 @@ $.ajax({
         })
     }
 });
+
+
+document.querySelector('#export-to-xlsx').onclick = function () {
+    $.ajax({
+        type: 'POST',
+        url: '/download_users_xlsx/',
+        success: function () {
+            alert('.xlsx файл сгенерирован')
+        }
+    })
+}
+
+document.querySelector('#export-to-pdf').onclick = function () {
+    $.ajax({
+        type: 'POST',
+        url: '/download_users_pdf/',
+        success: function () {
+            alert('.pdf файл сгенерирован')
+        }
+    })
+}

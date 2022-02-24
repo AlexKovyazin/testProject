@@ -55,9 +55,7 @@ class DownloadUsersXlsx:
     def __call__(self, request):
         users_data = collect_users_data()
         generate_xlsx(users_data)
-        return '200 OK', render('index.html',
-                                users_list=replace_none(get_total()),
-                                regions_list=get_regions())
+        return '200 OK', ''
 
 
 class DownloadUsersPdf:
@@ -67,6 +65,4 @@ class DownloadUsersPdf:
     """
     def __call__(self, request):
         generate_users_resume()
-        return '200 OK', render('index.html',
-                                users_list=replace_none(get_total()),
-                                regions_list=get_regions())
+        return '200 OK', ''
