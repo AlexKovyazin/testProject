@@ -29,6 +29,7 @@ body {
 
 .button-block {
     margin: 10px;
+    display: flex;
 }
 
 .func-button {
@@ -40,7 +41,8 @@ body {
     font-size: inherit;
     border: 2px solid #666666b0;
     width: 300px;
-    text-decoration: none
+    text-decoration: none;
+    margin: 0px 5px 0px 0px;
 }
 
 .func-button:hover {
@@ -223,4 +225,8 @@ body {
     background: #fff;
     color:#666666;
     transition: 0.5s all;
+}
+
+#file-input {
+    /*opacity: 0;*/
 }

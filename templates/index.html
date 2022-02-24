@@ -38,11 +38,22 @@
         <button class="open-popup">Добавить пользователя</button>
     </div>
     <div class="button-block">
-        <button class="func-button">Импортировать данные из .xlsx</button>
-        <button class="func-button" id="export-to-xlsx" >Экспортировать данные в .xlsx</button>
+        <form id="upload-xlsx-container" method="POST">
+            <button class="func-button">
+                Импортировать данные из .xlsx
+                <input id="xlsx-input" type="file" name="xlsx-file"
+                       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            </button>
+        </form>
+        <form id="upload-pdf-container" method="POST">
+            <button class="func-button">
+                Импортировать данные из .pdf
+                <input id="pdf-input" type="file" name="pdf-file" accept="application/pdf">
+            </button>
+        </form>
     </div>
-        <div class="button-block">
-        <button class="func-button">Импортировать данные из .pdf</button>
+    <div class="button-block">
+        <button class="func-button" id="export-to-xlsx">Экспортировать данные в .xlsx</button>
         <button class="func-button" id="export-to-pdf">Экспортировать данные в .pdf</button>
     </div>
 
@@ -109,6 +120,8 @@
             <button type="submit" id="submit-form">Создать</button>
         </form>
     </div>
+
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script defer src="{{ static }}js/style.js"></script>
