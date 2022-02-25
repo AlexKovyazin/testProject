@@ -100,8 +100,15 @@ def collect_users_data():
         # Заменяем id на названия
         region_id = user['region']
         city_id = user['city']
-        user['region'] = Region.get_region_name_by_id(region_id)
-        user['city'] = City.get_city_name_by_id(city_id)
+        try:  # В БД может отсутствовать город/регион пользователя
+            user['region'] = Region.get_region_name_by_id(region_id)
+        except AttributeError:
+            user['region'] = None
+        try:
+            user['city'] = City.get_city_name_by_id(city_id)
+        except AttributeError:
+            user['city'] = None
+
         for key, value in user.items():
             user_data.append(value)
         result.append(user_data)
@@ -129,6 +136,8 @@ def generate_xlsx(data):
     file_name = 'export_users.xlsx'
     file_path = os.path.join(ROOT_DIR, 'media', file_name)
     workbook.save(file_path)
+
+    return file_path
 
 
 def download_users_xlsx():
