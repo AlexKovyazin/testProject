@@ -161,14 +161,13 @@ def replace_none(query):
     :param query: sqlalchemy.orm.session.query
     :return: тот же объект с замененными атрибутами.
     """
-    for join in query:
-        for obj in join:
-            if obj is None:
-                continue
-            for column in obj.__table__.columns:
-                value = getattr(obj, column.name)
-                if value is None:
-                    setattr(obj, column.name, '')
+    for obj in query:
+        if obj is None:
+            continue
+        for column in obj.__table__.columns:
+            value = getattr(obj, column.name)
+            if value is None:
+                setattr(obj, column.name, '')
     return query
 
 
