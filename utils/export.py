@@ -17,7 +17,7 @@ def generate_users_resume():
     pdf_files = []
     outfile = os.path.join(ROOT_DIR, 'media', 'users_resume.pdf')
 
-    for user in query_as_dict(User.get_users()):
+    for user in collect_users_data(to_dict=True):
         # Генерируем .pdf файл и присваиваем переменной путь к файлу
         pdf = generate_pdf_resume(user)
         pdf_files.append(pdf)
@@ -66,10 +66,9 @@ def generate_docx_resume(user_data: dict):
     second_name = user_data['second_name']
     first_name = user_data['first_name']
     patronymic = user_data['patronymic']
-    city_id = user_data['city']
+    city = user_data['city']
     phone = user_data['phone']
     email = user_data['email']
-    city = City.get_city_name_by_id(city_id)
 
     template_name = 'resume_template.docx'
     doc = DocxTemplate(os.path.join(ROOT_DIR, 'media', 'templates', template_name))
