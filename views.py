@@ -24,8 +24,11 @@ class Index:
             new_user = User(**user_data)
             new_user.create_user()
 
+        total_join = get_total()
+        for join in total_join:
+            replace_none(join)
         return '200 OK', render('index.html',
-                                users_list=replace_none(get_total()),
+                                users_list=total_join,
                                 regions_list=get_regions())
 
 
@@ -54,8 +57,8 @@ class DownloadUsersXlsx:
     """
     def __call__(self, request):
         users_data = collect_users_data()
-        generate_xlsx(users_data)
-        return '200 OK', ''
+        file_path = generate_xlsx(users_data)
+        return '200 OK', file_path
 
 
 class DownloadUsersPdf:

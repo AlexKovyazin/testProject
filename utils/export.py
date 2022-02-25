@@ -1,7 +1,7 @@
 import os
 import comtypes.client
 from openpyxl import Workbook
-from models import query_as_dict, Region, City, User
+from models import query_as_dict, replace_none, Region, City, User
 from settings import ROOT_DIR
 from PyPDF2 import PdfFileMerger
 from docxtpl import DocxTemplate
@@ -87,13 +87,17 @@ def generate_docx_resume(user_data: dict):
     return out_file
 
 
-def collect_users_data():
+def collect_users_data(to_list=True, to_dict=False):
     """
     Собирает данные о пользователях из БД.
-    :return: [{user1}, {user2}...]
+    :return: to_dict=True - [{user1}, {user2}...]
+             to_dict=False - [[user1], [user2]...]
     """
     result = []
-    users_data = query_as_dict(User.get_users())
+    # Заменяем None в экземплярах User на пустые строки
+    users_query = User.get_users()
+    replace_none_query = replace_none(users_query)
+    users_data = query_as_dict(replace_none_query)
 
     for user in users_data:
         user_data = []
@@ -103,15 +107,18 @@ def collect_users_data():
         try:  # В БД может отсутствовать город/регион пользователя
             user['region'] = Region.get_region_name_by_id(region_id)
         except AttributeError:
-            user['region'] = None
+            user['region'] = ''
         try:
             user['city'] = City.get_city_name_by_id(city_id)
         except AttributeError:
-            user['city'] = None
+            user['city'] = ''
 
-        for key, value in user.items():
-            user_data.append(value)
-        result.append(user_data)
+        if to_dict is True:
+            result.append(user)
+        else:
+            for key, value in user.items():
+                user_data.append(value)
+            result.append(user_data)
 
     return result
 
