@@ -90,10 +90,14 @@ body {
     margin: initial;
     font-size: smaller;
 }
-/**/
+
 /*:invalid{*/
 /*    color: #2982ff;*/
 /*}*/
+
+input:invalid{
+    color: #2982ff;
+}
 
 /* Popup */
 

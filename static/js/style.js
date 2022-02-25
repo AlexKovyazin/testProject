@@ -16,7 +16,7 @@ closePopupButton.addEventListener('click',() => { // Вешаем обработ
     popup.classList.remove('active'); // И с окна
 });
 
-let form = document.querySelector("form");
+let form = document.querySelector("#user-create-form");
 let body = document.querySelector("body");
 let input = document.querySelector("input")
 form.addEventListener('invalid', function(evt) {
