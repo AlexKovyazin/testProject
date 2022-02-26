@@ -1,17 +1,13 @@
-// document.addEventListener('submit', (e) => {
-// // Отключаем событие по умолчанию
-//     e.preventDefault();
-// // Очищаем поля формы
-//     e.target.submit();
-//     e.target.reset();
-// });
+let userCreateForm = document.getElementById('user-create-form')
 
-document.querySelector('#submit-form').onclick = function () {
-    document.getElementById('user-create-form').submit();
-    // не отрабатывает :(
-    document.getElementById('user-create-form').reset();
+userCreateForm.submit = function () {
+    userCreateForm.submit();
+    console.log('Форма подтверждена');
+    userCreateForm.reset();
+    console.log('Форма очищена');
 }
 
+// Загрузка списка городов по выбранному ранее региону
 $.ajax({
     success: function (response) {
         $('.region-select').change(function() {
@@ -23,17 +19,18 @@ $.ajax({
     }
 });
 
-
+// Запрос на генерацию .xlsx файла
 document.querySelector('#export-to-xlsx').onclick = function () {
     $.ajax({
         type: 'POST',
         url: '/download_users_xlsx/',
         success: function () {
-            alert('.xlsx файл сгенерирован')
+            alert('.xlsx файл сгенерирован');
         }
     })
 }
 
+// Запрос на генерацию .pdf файла
 document.querySelector('#export-to-pdf').onclick = function () {
     $.ajax({
         type: 'POST',
