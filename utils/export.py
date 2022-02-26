@@ -1,10 +1,10 @@
 import os
-import comtypes.client
+import comtypes.client  # Только для Windows
 from openpyxl import Workbook
 from models import query_as_dict, replace_none, Region, City, User
 from settings import ROOT_DIR
 from PyPDF2 import PdfFileMerger
-from docxtpl import DocxTemplate
+from docxtpl import DocxTemplate  # Требует наличия MS Word
 
 
 def generate_users_resume():
