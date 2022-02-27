@@ -1,4 +1,6 @@
 import re
+import os
+from settings import ROOT_DIR
 from openpyxl import load_workbook
 from models import Region, City, User
 from pdfminer import high_level
@@ -136,4 +138,9 @@ def import_from_xlsx(path_to_file: str):
 
 
 if __name__ == '__main__':
+    # xlsx_path = os.path.join(ROOT_DIR, 'media', 'users_for_import.xlsx')
+    # import_from_xlsx(xlsx_path)
+
+    # pdf_path = ''  # Необходимо в переменную записать путь к .pdf файлу импортируемого резюме
+    # import_from_pdf(pdf_path)
     pass
